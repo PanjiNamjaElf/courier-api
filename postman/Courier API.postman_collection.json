@@ -1,0 +1,1365 @@
+{
+    "info": {
+        "name": "Courier API",
+        "description": "REST API master data kurir (Laravel). Jalankan server dengan `php artisan serve`, lalu sesuaikan variable `base_url` bila perlu. Jalankan request secara berurutan: Create courier menyimpan `courier_id` untuk Show, Update, dan Delete.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Couriers",
+            "item": [
+                {
+                    "name": "List couriers",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Has data, links, meta\", function () {",
+                                    "    const json = pm.response.json();",
+                                    "    pm.expect(json).to.have.keys(\"data\", \"links\", \"meta\");",
+                                    "});",
+                                    "pm.test(\"Sorted by name ascending\", function () {",
+                                    "    const names = pm.response.json().data.map((courier) => courier.name);",
+                                    "    const sorted = [...names].sort((first, second) => first.localeCompare(second));",
+                                    "    pm.expect(names).to.eql(sorted);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "description": "Cari nama kurir. Setiap kata harus ada di nama (urutan bebas, tidak peka huruf besar/kecil). Contoh: budi+agung.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "level",
+                                    "value": "",
+                                    "description": "Filter level, dipisah koma. Contoh: 2,3.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "",
+                                    "description": "Kolom urutan: name (default) atau registered_at.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "direction",
+                                    "value": "",
+                                    "description": "Arah urutan: asc (default) atau desc.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "",
+                                    "description": "Jumlah data per halaman, 1-100. Default 15.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "",
+                                    "description": "Nomor halaman, mulai dari 1.",
+                                    "disabled": true
+                                }
+                            ]
+                        },
+                        "description": "Daftar kurir dengan pagination (15 per halaman), diurutkan berdasarkan nama. Aktifkan query params yang di-disable untuk mencoba opsi lain."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 14,\n            \"name\": \"Ade Mulyani\",\n            \"phone\": \"082163271914\",\n            \"email\": \"ratih.pratiwi@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-09-30\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Agung Prasetyo\",\n            \"phone\": \"081200000003\",\n            \"email\": \"agung@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-07-21\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 24,\n            \"name\": \"Asmadi Hutapea\",\n            \"phone\": \"087084833544\",\n            \"email\": \"cagak.dabukke@example.net\",\n            \"level\": 2,\n            \"registered_at\": \"2025-05-24\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Bakianto Pranowo\",\n            \"phone\": \"089934177752\",\n            \"email\": \"warji.permata@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-11-21\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Budi Santoso\",\n            \"phone\": \"081200000002\",\n            \"email\": \"budi.santoso@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2024-11-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Budiono Hadi Agung\",\n            \"phone\": \"081200000001\",\n            \"email\": \"budiono@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2025-03-10\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Candrakanta Pradipta\",\n            \"phone\": \"084868798689\",\n            \"email\": \"xpermata@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-08-16\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Dinda Palastri\",\n            \"phone\": \"083294047717\",\n            \"email\": \"pratiwi.radika@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2025-02-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Eman Halimah\",\n            \"phone\": \"080231541135\",\n            \"email\": \"jaswadi.padmasari@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-02-26\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Farhunnisa Suwarno\",\n            \"phone\": \"084098766536\",\n            \"email\": \"simbolon.hana@example.net\",\n            \"level\": 5,\n            \"registered_at\": \"2025-04-14\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Hardi Utami\",\n            \"phone\": \"088035804515\",\n            \"email\": \"azalea19@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-06-25\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Irsad Damanik\",\n            \"phone\": \"085121327928\",\n            \"email\": \"pia.rajata@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2024-12-01\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Juli Mulyani\",\n            \"phone\": \"082840370906\",\n            \"email\": \"ehassanah@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-06-25\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Lili Narpati\",\n            \"phone\": \"087023811785\",\n            \"email\": \"qwulandari@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2026-02-05\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"name\": \"Mahdi Habibi\",\n            \"phone\": \"084654404334\",\n            \"email\": \"psalahudin@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2026-10-12\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?page=2\",\n        \"prev\": null,\n        \"next\": \"http://127.0.0.1:8000/api/couriers?page=2\"\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 2,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?page=2\",\n                \"label\": \"2\",\n                \"page\": 2,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"page\": 2,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 15,\n        \"to\": 15,\n        \"total\": 24\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - pagination",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Returns page 2 with 5 items per page\", function () {",
+                                    "    const meta = pm.response.json().meta;",
+                                    "    pm.expect(meta.current_page).to.eql(2);",
+                                    "    pm.expect(meta.per_page).to.eql(5);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?per_page=5&page=2",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "per_page",
+                                    "value": "5",
+                                    "description": "Jumlah data per halaman, 1-100. Default 15."
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "2",
+                                    "description": "Nomor halaman, mulai dari 1."
+                                }
+                            ]
+                        },
+                        "description": "Halaman ke-2 dengan 5 data per halaman."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?per_page=5&page=2",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "per_page",
+                                            "value": "5",
+                                            "description": "Jumlah data per halaman, 1-100. Default 15."
+                                        },
+                                        {
+                                            "key": "page",
+                                            "value": "2",
+                                            "description": "Nomor halaman, mulai dari 1."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Budiono Hadi Agung\",\n            \"phone\": \"081200000001\",\n            \"email\": \"budiono@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2025-03-10\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Candrakanta Pradipta\",\n            \"phone\": \"084868798689\",\n            \"email\": \"xpermata@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-08-16\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Dinda Palastri\",\n            \"phone\": \"083294047717\",\n            \"email\": \"pratiwi.radika@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2025-02-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Eman Halimah\",\n            \"phone\": \"080231541135\",\n            \"email\": \"jaswadi.padmasari@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-02-26\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Farhunnisa Suwarno\",\n            \"phone\": \"084098766536\",\n            \"email\": \"simbolon.hana@example.net\",\n            \"level\": 5,\n            \"registered_at\": \"2025-04-14\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=5\",\n        \"prev\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=1\",\n        \"next\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=3\"\n    },\n    \"meta\": {\n        \"current_page\": 2,\n        \"from\": 6,\n        \"last_page\": 5,\n        \"links\": [\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=1\",\n                \"label\": \"&laquo; Previous\",\n                \"page\": 1,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=2\",\n                \"label\": \"2\",\n                \"page\": 2,\n                \"active\": true\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=3\",\n                \"label\": \"3\",\n                \"page\": 3,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=4\",\n                \"label\": \"4\",\n                \"page\": 4,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=5\",\n                \"label\": \"5\",\n                \"page\": 5,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?per_page=5&page=3\",\n                \"label\": \"Next &raquo;\",\n                \"page\": 3,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 5,\n        \"to\": 10,\n        \"total\": 24\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - sort by registration date",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Newest registration first\", function () {",
+                                    "    const dates = pm.response.json().data.map((courier) => courier.registered_at);",
+                                    "    const sorted = [...dates].sort().reverse();",
+                                    "    pm.expect(dates).to.eql(sorted);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?sort=registered_at&direction=desc",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "sort",
+                                    "value": "registered_at",
+                                    "description": "Kolom urutan: name (default) atau registered_at."
+                                },
+                                {
+                                    "key": "direction",
+                                    "value": "desc",
+                                    "description": "Arah urutan: asc (default) atau desc."
+                                }
+                            ]
+                        },
+                        "description": "Override urutan default: urutkan berdasarkan tanggal pendaftaran, terbaru dulu."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?sort=registered_at&direction=desc",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "sort",
+                                            "value": "registered_at",
+                                            "description": "Kolom urutan: name (default) atau registered_at."
+                                        },
+                                        {
+                                            "key": "direction",
+                                            "value": "desc",
+                                            "description": "Arah urutan: asc (default) atau desc."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 21,\n            \"name\": \"Bakianto Pranowo\",\n            \"phone\": \"089934177752\",\n            \"email\": \"warji.permata@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-11-21\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Respati Andriani\",\n            \"phone\": \"080015464020\",\n            \"email\": \"pia.kuswoyo@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2026-11-17\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"name\": \"Mahdi Habibi\",\n            \"phone\": \"084654404334\",\n            \"email\": \"psalahudin@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2026-10-12\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Juli Mulyani\",\n            \"phone\": \"082840370906\",\n            \"email\": \"ehassanah@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-06-25\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Hardi Utami\",\n            \"phone\": \"088035804515\",\n            \"email\": \"azalea19@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-06-25\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Mariadi Pratiwi\",\n            \"phone\": \"087942170888\",\n            \"email\": \"marsito.wibisono@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-04-18\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Vero Damanik\",\n            \"phone\": \"082922986770\",\n            \"email\": \"sihombing.nova@example.net\",\n            \"level\": 2,\n            \"registered_at\": \"2026-03-23\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Surya Prayoga\",\n            \"phone\": \"080582519271\",\n            \"email\": \"lnugroho@example.com\",\n            \"level\": 4,\n            \"registered_at\": \"2026-03-04\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Novi Laksmiwati\",\n            \"phone\": \"082938970785\",\n            \"email\": \"xfarida@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-02-27\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Eman Halimah\",\n            \"phone\": \"080231541135\",\n            \"email\": \"jaswadi.padmasari@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2026-02-26\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Lili Narpati\",\n            \"phone\": \"087023811785\",\n            \"email\": \"qwulandari@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2026-02-05\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Siti Rahmawati\",\n            \"phone\": \"081200000004\",\n            \"email\": null,\n            \"level\": 1,\n            \"registered_at\": \"2026-01-15\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Ade Mulyani\",\n            \"phone\": \"082163271914\",\n            \"email\": \"ratih.pratiwi@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-09-30\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Oliva Susanti\",\n            \"phone\": \"086598343060\",\n            \"email\": \"rahayu.kacung@example.com\",\n            \"level\": 1,\n            \"registered_at\": \"2025-09-04\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Candrakanta Pradipta\",\n            \"phone\": \"084868798689\",\n            \"email\": \"xpermata@example.com\",\n            \"level\": 5,\n            \"registered_at\": \"2025-08-16\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=2\",\n        \"prev\": null,\n        \"next\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=2\"\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 2,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=2\",\n                \"label\": \"2\",\n                \"page\": 2,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?sort=registered_at&direction=desc&page=2\",\n                \"label\": \"Next &raquo;\",\n                \"page\": 2,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 15,\n        \"to\": 15,\n        \"total\": 24\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - search multiple words",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Every result contains all search words\", function () {",
+                                    "    pm.response.json().data.forEach((courier) => {",
+                                    "        const name = courier.name.toLowerCase();",
+                                    "        pm.expect(name).to.include(\"budi\");",
+                                    "        pm.expect(name).to.include(\"agung\");",
+                                    "    });",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?search=budi+agung",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "budi+agung",
+                                    "description": "Cari nama kurir. Setiap kata harus ada di nama (urutan bebas, tidak peka huruf besar/kecil). Contoh: budi+agung."
+                                }
+                            ]
+                        },
+                        "description": "`budi+agung` menemukan `Budiono Hadi Agung`: setiap kata dicari sebagai bagian nama, urutan kata bebas."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?search=budi+agung",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "search",
+                                            "value": "budi+agung",
+                                            "description": "Cari nama kurir. Setiap kata harus ada di nama (urutan bebas, tidak peka huruf besar/kecil). Contoh: budi+agung."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Budiono Hadi Agung\",\n            \"phone\": \"081200000001\",\n            \"email\": \"budiono@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2025-03-10\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?search=budi%20agung&page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?search=budi%20agung&page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?search=budi%20agung&page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 15,\n        \"to\": 1,\n        \"total\": 1\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - filter levels",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Only level 2 or 3\", function () {",
+                                    "    pm.response.json().data.forEach((courier) => {",
+                                    "        pm.expect([2, 3]).to.include(courier.level);",
+                                    "    });",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?level=2,3",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "level",
+                                    "value": "2,3",
+                                    "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                }
+                            ]
+                        },
+                        "description": "Hanya kurir level 2 atau 3."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?level=2,3",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "level",
+                                            "value": "2,3",
+                                            "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 24,\n            \"name\": \"Asmadi Hutapea\",\n            \"phone\": \"087084833544\",\n            \"email\": \"cagak.dabukke@example.net\",\n            \"level\": 2,\n            \"registered_at\": \"2025-05-24\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Budi Santoso\",\n            \"phone\": \"081200000002\",\n            \"email\": \"budi.santoso@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2024-11-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Budiono Hadi Agung\",\n            \"phone\": \"081200000001\",\n            \"email\": \"budiono@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2025-03-10\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Dinda Palastri\",\n            \"phone\": \"083294047717\",\n            \"email\": \"pratiwi.radika@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2025-02-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Irsad Damanik\",\n            \"phone\": \"085121327928\",\n            \"email\": \"pia.rajata@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2024-12-01\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Lili Narpati\",\n            \"phone\": \"087023811785\",\n            \"email\": \"qwulandari@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2026-02-05\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 23,\n            \"name\": \"Mahdi Habibi\",\n            \"phone\": \"084654404334\",\n            \"email\": \"psalahudin@example.org\",\n            \"level\": 3,\n            \"registered_at\": \"2026-10-12\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Vero Damanik\",\n            \"phone\": \"082922986770\",\n            \"email\": \"sihombing.nova@example.net\",\n            \"level\": 2,\n            \"registered_at\": \"2026-03-23\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?level=2%2C3&page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?level=2%2C3&page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?level=2%2C3&page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 15,\n        \"to\": 8,\n        \"total\": 8\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - combined",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?search=budi&level=2,3&sort=registered_at&direction=desc&per_page=10",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "budi",
+                                    "description": "Cari nama kurir. Setiap kata harus ada di nama (urutan bebas, tidak peka huruf besar/kecil). Contoh: budi+agung."
+                                },
+                                {
+                                    "key": "level",
+                                    "value": "2,3",
+                                    "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "registered_at",
+                                    "description": "Kolom urutan: name (default) atau registered_at."
+                                },
+                                {
+                                    "key": "direction",
+                                    "value": "desc",
+                                    "description": "Arah urutan: asc (default) atau desc."
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "Jumlah data per halaman, 1-100. Default 15."
+                                }
+                            ]
+                        },
+                        "description": "Gabungan pencarian, filter level, urutan, dan pagination."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?search=budi&level=2,3&sort=registered_at&direction=desc&per_page=10",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "search",
+                                            "value": "budi",
+                                            "description": "Cari nama kurir. Setiap kata harus ada di nama (urutan bebas, tidak peka huruf besar/kecil). Contoh: budi+agung."
+                                        },
+                                        {
+                                            "key": "level",
+                                            "value": "2,3",
+                                            "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                        },
+                                        {
+                                            "key": "sort",
+                                            "value": "registered_at",
+                                            "description": "Kolom urutan: name (default) atau registered_at."
+                                        },
+                                        {
+                                            "key": "direction",
+                                            "value": "desc",
+                                            "description": "Arah urutan: asc (default) atau desc."
+                                        },
+                                        {
+                                            "key": "per_page",
+                                            "value": "10",
+                                            "description": "Jumlah data per halaman, 1-100. Default 15."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Budiono Hadi Agung\",\n            \"phone\": \"081200000001\",\n            \"email\": \"budiono@example.com\",\n            \"level\": 3,\n            \"registered_at\": \"2025-03-10\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Budi Santoso\",\n            \"phone\": \"081200000002\",\n            \"email\": \"budi.santoso@example.com\",\n            \"level\": 2,\n            \"registered_at\": \"2024-11-02\",\n            \"created_at\": \"2026-11-24T03:19:20.000000Z\",\n            \"updated_at\": \"2026-11-24T03:19:20.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/couriers?search=budi&level=2%2C3&sort=registered_at&direction=desc&per_page=10&page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/couriers?search=budi&level=2%2C3&sort=registered_at&direction=desc&per_page=10&page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/couriers?search=budi&level=2%2C3&sort=registered_at&direction=desc&per_page=10&page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/couriers\",\n        \"per_page\": 10,\n        \"to\": 2,\n        \"total\": 2\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List couriers - invalid query",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 422\", function () {",
+                                    "    pm.response.to.have.status(422);",
+                                    "});",
+                                    "pm.test(\"Reports level and sort errors\", function () {",
+                                    "    pm.expect(pm.response.json().errors).to.have.keys(\"level\", \"sort\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers?level=2,9&sort=email",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "level",
+                                    "value": "2,9",
+                                    "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "email",
+                                    "description": "Kolom urutan: name (default) atau registered_at."
+                                }
+                            ]
+                        },
+                        "description": "Contoh query tidak valid: level di luar 1-5 dan kolom urutan yang tidak didukung."
+                    },
+                    "response": [
+                        {
+                            "name": "422 Unprocessable Content",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers?level=2,9&sort=email",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "level",
+                                            "value": "2,9",
+                                            "description": "Filter level, dipisah koma. Contoh: 2,3."
+                                        },
+                                        {
+                                            "key": "sort",
+                                            "value": "email",
+                                            "description": "Kolom urutan: name (default) atau registered_at."
+                                        }
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "Unprocessable Content",
+                            "code": 422,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"message\": \"Level harus berupa angka 1 sampai 5 yang dipisahkan koma, contoh 2,3. (dan 1 kesalahan lainnya)\",\n    \"errors\": {\n        \"level\": [\n            \"Level harus berupa angka 1 sampai 5 yang dipisahkan koma, contoh 2,3.\"\n        ],\n        \"sort\": [\n            \"Kolom urutan yang dipilih tidak valid. Pilihan yang tersedia: name, registered_at.\"\n        ]\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create courier",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "// Random Indonesian mobile number so the request can be repeated without a unique conflict.",
+                                    "const randomDigits = Math.floor(10000000 + Math.random() * 90000000);",
+                                    "pm.collectionVariables.set(\"courier_phone\", \"0812\" + randomDigits);"
+                                ]
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 201\", function () {",
+                                    "    pm.response.to.have.status(201);",
+                                    "});",
+                                    "pm.test(\"Returns the new courier\", function () {",
+                                    "    const courier = pm.response.json().data;",
+                                    "    pm.expect(courier.name).to.eql(\"Dewi Lestari\");",
+                                    "    pm.collectionVariables.set(\"courier_id\", courier.id);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ]
+                        },
+                        "description": "Membuat kurir baru. `email` dan `registered_at` opsional (default tanggal hari ini). Nomor HP dibuat acak oleh pre-request script agar request bisa diulang tanpa bentrok unique. `courier_id` disimpan otomatis untuk request berikutnya.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Dewi Lestari\",\n    \"phone\": \"{{courier_phone}}\",\n    \"email\": \"dewi.{{$timestamp}}@example.com\",\n    \"level\": 2,\n    \"registered_at\": \"2026-11-01\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "201 Created",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ]
+                                },
+                                "description": "",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Dewi Lestari\",\n    \"phone\": \"081398765432\",\n    \"email\": \"dewi@example.com\",\n    \"level\": 2,\n    \"registered_at\": \"2026-11-01\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": {\n        \"id\": 26,\n        \"name\": \"Dewi Lestari\",\n        \"phone\": \"081398765432\",\n        \"email\": \"dewi@example.com\",\n        \"level\": 2,\n        \"registered_at\": \"2026-11-01\",\n        \"created_at\": \"2026-11-24T03:20:47.000000Z\",\n        \"updated_at\": \"2026-11-24T03:20:47.000000Z\"\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create courier - invalid input",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 422\", function () {",
+                                    "    pm.response.to.have.status(422);",
+                                    "});",
+                                    "pm.test(\"Reports every invalid field\", function () {",
+                                    "    pm.expect(pm.response.json().errors).to.have.keys(\"name\", \"phone\", \"email\", \"level\", \"registered_at\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers"
+                            ]
+                        },
+                        "description": "Contoh validasi gagal: semua field tidak valid.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Dewi 99\",\n    \"phone\": \"12345\",\n    \"email\": \"bukan-email\",\n    \"level\": 7,\n    \"registered_at\": \"2999-01-01\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "422 Unprocessable Content",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers"
+                                    ]
+                                },
+                                "description": "",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Dewi 99\",\n    \"phone\": \"12345\",\n    \"email\": \"bukan-email\",\n    \"level\": 7,\n    \"registered_at\": \"2999-01-01\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Unprocessable Content",
+                            "code": 422,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"message\": \"Nama hanya boleh berisi huruf, spasi, titik, apostrof, dan tanda hubung. (dan 4 kesalahan lainnya)\",\n    \"errors\": {\n        \"name\": [\n            \"Nama hanya boleh berisi huruf, spasi, titik, apostrof, dan tanda hubung.\"\n        ],\n        \"phone\": [\n            \"Nomor HP harus berupa nomor HP Indonesia, contoh 081234567890 atau +6281234567890.\"\n        ],\n        \"email\": [\n            \"Email harus berupa alamat email yang valid.\"\n        ],\n        \"level\": [\n            \"Level harus bernilai antara 1 sampai 5.\"\n        ],\n        \"registered_at\": [\n            \"Tanggal pendaftaran harus berupa tanggal sebelum atau sama dengan hari ini.\"\n        ]\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Show courier",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Returns the requested courier\", function () {",
+                                    "    pm.expect(pm.response.json().data.id).to.eql(Number(pm.collectionVariables.get(\"courier_id\")));",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers/{{courier_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers",
+                                "{{courier_id}}"
+                            ]
+                        },
+                        "description": "Menampilkan semua data satu kurir."
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers/26",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers",
+                                        "26"
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": {\n        \"id\": 26,\n        \"name\": \"Dewi Lestari\",\n        \"phone\": \"081398765432\",\n        \"email\": \"dewi@example.com\",\n        \"level\": 2,\n        \"registered_at\": \"2026-11-01\",\n        \"created_at\": \"2026-11-24T03:20:47.000000Z\",\n        \"updated_at\": \"2026-11-24T03:20:47.000000Z\"\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update courier (PUT)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Saved the new values\", function () {",
+                                    "    const courier = pm.response.json().data;",
+                                    "    pm.expect(courier.name).to.eql(\"Dewi Lestari Putri\");",
+                                    "    pm.expect(courier.level).to.eql(3);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers/{{courier_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers",
+                                "{{courier_id}}"
+                            ]
+                        },
+                        "description": "Mengubah data kurir. Field yang tidak dikirim tidak diubah.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Dewi Lestari Putri\",\n    \"phone\": \"{{courier_phone}}\",\n    \"email\": \"dewi.putri.{{$timestamp}}@example.com\",\n    \"level\": 3,\n    \"registered_at\": \"2026-11-01\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers/26",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers",
+                                        "26"
+                                    ]
+                                },
+                                "description": "",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Dewi Lestari Putri\",\n    \"phone\": \"081398765432\",\n    \"email\": \"dewi.putri@example.com\",\n    \"level\": 3,\n    \"registered_at\": \"2026-11-01\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": {\n        \"id\": 26,\n        \"name\": \"Dewi Lestari Putri\",\n        \"phone\": \"081398765432\",\n        \"email\": \"dewi.putri@example.com\",\n        \"level\": 3,\n        \"registered_at\": \"2026-11-01\",\n        \"created_at\": \"2026-11-24T03:20:47.000000Z\",\n        \"updated_at\": \"2026-11-24T03:20:47.000000Z\"\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update courier (PATCH)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "pm.test(\"Only level changed\", function () {",
+                                    "    pm.expect(pm.response.json().data.level).to.eql(5);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers/{{courier_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers",
+                                "{{courier_id}}"
+                            ]
+                        },
+                        "description": "Update sebagian: hanya level yang diubah.",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"level\": 5\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200 OK",
+                            "originalRequest": {
+                                "method": "PATCH",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers/26",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers",
+                                        "26"
+                                    ]
+                                },
+                                "description": "",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"level\": 5\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"data\": {\n        \"id\": 26,\n        \"name\": \"Dewi Lestari Putri\",\n        \"phone\": \"081398765432\",\n        \"email\": \"dewi.putri@example.com\",\n        \"level\": 5,\n        \"registered_at\": \"2026-11-01\",\n        \"created_at\": \"2026-11-24T03:20:47.000000Z\",\n        \"updated_at\": \"2026-11-24T03:20:48.000000Z\"\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete courier",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 204\", function () {",
+                                    "    pm.response.to.have.status(204);",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers/{{courier_id}}",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers",
+                                "{{courier_id}}"
+                            ]
+                        },
+                        "description": "Menghapus kurir secara permanen. Respons 204 tanpa body."
+                    },
+                    "response": [
+                        {
+                            "name": "204 No Content",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers/26",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers",
+                                        "26"
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "No Content",
+                            "code": 204,
+                            "_postman_previewlanguage": "text",
+                            "header": [],
+                            "body": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show courier - not found",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "pm.test(\"Status 404\", function () {",
+                                    "    pm.response.to.have.status(404);",
+                                    "});",
+                                    "pm.test(\"Returns a not found message\", function () {",
+                                    "    pm.expect(pm.response.json().message).to.eql(\"Data tidak ditemukan.\");",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/couriers/999999",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "couriers",
+                                "999999"
+                            ]
+                        },
+                        "description": "Kurir yang tidak ada (atau sudah dihapus) menghasilkan 404."
+                    },
+                    "response": [
+                        {
+                            "name": "404 Not Found",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/couriers/999999",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "couriers",
+                                        "999999"
+                                    ]
+                                },
+                                "description": ""
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n    \"message\": \"Data tidak ditemukan.\"\n}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://127.0.0.1:8000/api",
+            "type": "string"
+        },
+        {
+            "key": "courier_id",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "courier_phone",
+            "value": "081234567890",
+            "type": "string"
+        }
+    ]
+}
